@@ -17,7 +17,22 @@ const postData = async (recipe) => {
 
   await recipeGuardado.addDiet(dietsdb);
 
-  return recipeGuardado;
+  const resultado = await Recipe.findOne({
+    where: { id: recipeGuardado.id },
+    attributes: [
+      "id",
+      "title",
+      "summary",
+      "healthScore",
+      "steps",
+      "image",
+      "createDb",
+    ],
+    include: { model: Diet },
+  });
+
+  return resultado;
+  
 };
 
 module.exports = postData;
